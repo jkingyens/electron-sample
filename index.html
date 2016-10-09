@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>Hello World!</title>
   </head>
+  <script>
+     var fs = require('fs');
+     var blah = fs.readFileSync(__dirname + '/blah.txt');
+     console.log(blah.toString());
+  </script>
   <body>
     <h1>Hello World!</h1>
     We are using node <script>document.write(process.versions.node)</script>,

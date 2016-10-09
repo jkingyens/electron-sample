@@ -21,6 +21,20 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   })
+
+  // load a normal web page here?
+  win2 = new BrowserWindow({width: 800, height: 600, chrome: true})
+  win2.loadURL('https://stripe.com')
+  win2.on('closed', () => {
+    win2 = null
+  })
+  win2.on('app-command', (e, cmd) => {
+  // Navigate the window back when the user hits their mouse back button
+  if (cmd === 'browser-backward' && win2.webContents.canGoBack()) {
+    win2.webContents.goBack()
+  }
+})
+
 }
 
 // This method will be called when Electron has finished
