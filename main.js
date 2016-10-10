@@ -1,4 +1,5 @@
 const {app, BrowserWindow} = require('electron')
+const dockerode = require('dockerode')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -40,7 +41,33 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', () => {
+
+  // create browser window
+  createWindow();
+
+  // connect with docker & test environment
+  var docker = new dockerode({socketPath: '/var/run/docker.sock'});
+
+  // pull docker image
+  docker.pull('busybox:latest', (err, stream) => {
+
+    if (err) {
+      return console.error('error pulling docker image')
+    }
+
+    console.log('pull has started')
+    stream.on('data', (data) => {
+      console.log(data.toString())
+    });
+
+    stream.on('end', () => {
+      console.log('stream is pulled')
+    });
+
+  });
+
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {

@@ -8,6 +8,10 @@
      var fs = require('fs');
      var blah = fs.readFileSync(__dirname + '/blah.txt');
      console.log(blah.toString());
+
+     console.log(navigator.credentials);
+     navigator.credentials.requireUserMediation()
+
   </script>
   <body>
     <h1>Hello World!</h1>
